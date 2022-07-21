@@ -19,8 +19,6 @@ public class TodoService {
 	protected static final Logger log = LoggerFactory.getLogger(TodoService.class);
 
 	List<ToDo> todoList = new ArrayList<ToDo>();
-	
-	
 
 	public TodoService() {
 		ToDo todo = new ToDo();

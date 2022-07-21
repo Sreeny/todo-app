@@ -56,13 +56,4 @@ public class MvcConfiguration implements WebMvcConfigurer {
 		return validator();
 	}
 
-	@Bean
-	public ObjectMapper objectMapper() {
-		ObjectMapper mapper = new ObjectMapper();
-		//mapper.registerModule(new JavaTimeModule());
-		mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS,true);
-		//mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-		return mapper;
-	}
-
 }

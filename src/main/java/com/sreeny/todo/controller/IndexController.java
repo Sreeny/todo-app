@@ -19,9 +19,6 @@ public class IndexController {
 	@RequestMapping(value="/")
 	public ModelAndView index(HttpServletResponse response) throws IOException{
 		log.info("ToDo App called home page");
-		log.debug("ToDo App called home page");
-		log.error("ToDo App called home page");
-		log.trace("ToDo App called home page");
 		return new ModelAndView("index");
 	}
 }

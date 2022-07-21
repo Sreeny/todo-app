@@ -35,17 +35,15 @@ public class TodoController {
 		ToDo todo = new ToDo();
 		model.addAttribute("newTodo", todo);
 		return "createTodo";
-
 	}
-	
+
 	@RequestMapping(path = "/edit/{id}", method = RequestMethod.GET)
 	public String edit(@PathVariable Long id, ModelMap model) {
-		
-		log.info("Fetching ToDo for update for :"+id);
+
+		log.info("Fetching ToDo for update for :" + id);
 		ToDo todo = todoService.getById(id);
 		model.addAttribute("toDo", todo);
 		return "createTodo";
-
 	}
 
 	@RequestMapping(path = "/save", method = RequestMethod.POST)
@@ -57,12 +55,11 @@ public class TodoController {
 		log.info(todo.toString());
 		todoService.save(todo);
 		return "createTodo";
-
 	}
-	
+
 	@RequestMapping(path = "/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> delete(@PathVariable Long id) {
-		log.info("Deleting for the id: "+id);
+		log.info("Deleting for the id: " + id);
 		todoService.remove(id);
 		return new ResponseEntity<String>("{\"deleted\" : \"Suucess\"}", HttpStatus.OK);
 	}
@@ -71,14 +68,12 @@ public class TodoController {
 	public String allTods() {
 		log.info("Invoking All todos");
 		return "myTodoList";
-
 	}
 
 	@RequestMapping(path = "/allTodosByUserId/{userId}", method = RequestMethod.GET)
 	public ResponseEntity<List<ToDo>> allTodsByUserId(@PathVariable String userId) {
 		log.info("Fetching Todos for the user: " + userId);
 		return new ResponseEntity<List<ToDo>>(todoService.getAllTodsByUserId(userId), HttpStatus.OK);
-
 	}
 
 }
