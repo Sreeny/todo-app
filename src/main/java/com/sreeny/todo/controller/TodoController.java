@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.sreeny.todo.model.StatusResponse;
 import com.sreeny.todo.model.ToDo;
 import com.sreeny.todo.service.TodoService;
 
@@ -58,10 +59,13 @@ public class TodoController {
 	}
 
 	@RequestMapping(path = "/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> delete(@PathVariable Long id) {
+	public ResponseEntity<?> delete(@PathVariable Long id) {
 		log.info("Deleting for the id: " + id);
 		todoService.remove(id);
-		return new ResponseEntity<String>("{\"deleted\" : \"Suucess\"}", HttpStatus.OK);
+		StatusResponse response  = new StatusResponse();
+		response.setMessage("Success");
+		response.setStatus("Success");
+		return new ResponseEntity(response, HttpStatus.OK);
 	}
 
 	@RequestMapping(path = "/allTodos", method = RequestMethod.GET)

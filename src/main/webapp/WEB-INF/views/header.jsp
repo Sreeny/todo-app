@@ -26,8 +26,13 @@
 	<div class="collapse navbar-collapse " id="navbarSupportedContent">
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item active"><a class="nav-link" href="<c:url value='/' />">Home <span class="sr-only"></span></a></li>
-			<li class="nav-item"><a class="nav-link" href="<c:url value='create' />">Create New ToDo </a></li>
-			<li class="nav-item"><a class="nav-link" href="<c:url value='allTodos' />">My ToDo's </a></li>
+			<li class="nav-item"><a class="nav-link" href="<c:url value='/create' />">Create New ToDo </a></li>
+			<li class="nav-item"><a class="nav-link" href="<c:url value='/allTodos' />">My ToDo's </a></li>
 		</ul>
+		
 	</div>
+	<span><c:if test = "${sessionScope.message != null || sessionScope.message != ''}">
+         <p>${sessionScope.message}<p>
+      </c:if>
+      </span>
 </nav>
