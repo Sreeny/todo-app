@@ -5,41 +5,37 @@
 
 
 <html>
-<head>
- <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
-</head>
 
-<br/>
+<br />
 <div class="container">
 	<div class="row">
 		<div class="col"></div>
 		<div class="col">
-			<form:form class='card p-3 bg-light' action="save" method="post" modelAttribute="toDo">
-			 
-			 <h5 class="card-header"  style="background-color: #18d2f8;">New ToDo</h5>
-				<div class="mb-3 form-group required" >
+			<form:form class='card p-3 bg-light' action="/todo/save" method="post" modelAttribute="toDo">
+				<input type="hidden" id= "id" name="id" value="${id}"/>
+				<h5 class="card-header" style="background-color: #18d2f8;">New ToDo</h5>
+				<div class="mb-3 form-group required">
 					<label for="taskName" class="control-label">Name</label>
-					<input type="text" class="form-control " id="taskName" name="taskName">
-					<form:errors path="taskName" cssStyle="color: #ff0000" cssClass="error"/>
+					<input type="text" class="form-control " id="taskName" name="taskName" value="${toDo.taskName}">
+					<form:errors path="taskName" cssStyle="color: #ff0000" cssClass="error" />
 				</div>
 				<div class="mb-3">
 					<label for="taskDesc" class="form-label">Description</label>
-					<input type="text" class="form-control" id="description" name="description" rows="3">
+					<input type="text" class="form-control" id="description" name="description"  value="${toDo.description}">
 				</div>
 				<div class="mb-3 form-group required">
 					<label for="taskDueDate" class="control-label">Due Date</label>
 					<div class="form-group">
-						<div class="input-group date" id="datepicker">
-							<input type="text" class="form-control" id="dueDate" name="dueDate">
-							<span class="input-group-append"> <span class="input-group-text bg-white d-block">
-									<i class="fa fa-calendar"></i>
+						<div class="input-group" id="datepicker">
+							<input type="text" class="form-control" id="dueDate" name="dueDate" value="${toDo.dueDate}">
+							<span class="input-group-append"> <span class="input-group-text bg-white d-block"> <i class="fa fa-calendar"></i>
 							</span>
 							</span>
 						</div>
-						<form:errors path="dueDate" cssStyle="color: #ff0000" cssClass="error"/>
+						<form:errors path="dueDate" cssStyle="color: #ff0000" cssClass="error" />
 					</div>
 				</div>
-				 
+
 				<div class="mb-3">
 					<p>
 						<input type="submit" value="Submit" />
@@ -50,8 +46,8 @@
 		<div class="col"></div>
 	</div>
 </div>
- <!-- jQuery CDN -->
-      
+<!-- jQuery CDN -->
+<%@ include file="myTodoListBody.jsp"%>
 <script>
             $(document).ready(function () {
                 $('#datepicker').datetimepicker({

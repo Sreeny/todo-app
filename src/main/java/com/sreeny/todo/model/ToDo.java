@@ -1,5 +1,7 @@
 package com.sreeny.todo.model;
 
+
+
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -8,12 +10,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 
@@ -43,6 +46,7 @@ public class ToDo {
 	@Column(name = "DUE_DATE", nullable = false)
     @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss") 
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime dueDate;
 	
 	@Column(name = "STATUS", nullable = false)
