@@ -1,9 +1,5 @@
 package com.sreeny.todo.model;
 
-
-
-import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,22 +8,27 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.joda.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-
-
-
 @Entity
 @Table(name="TODO")
-public class ToDo {
+@Component
+@DynamicInsert
+@DynamicUpdate
+public class Todo {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	
 	@Column(name = "ID", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@Column(name = "USER_ID", nullable = false)

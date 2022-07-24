@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class StatusResponse {
 	
-	
 	private String status;
 	private String message;
 	public String getStatus() {
