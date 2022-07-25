@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.sreeny.todo.model.Login;
 import com.sreeny.todo.service.UserService;
+import com.sreeny.todo.util.StatusEnum;
 
 @Controller
 @RequestMapping(value="/")
@@ -36,7 +37,7 @@ public class IndexController {
 	
 	@RequestMapping(value="/login")
 	public String login(@Valid  Login login, BindingResult result, ModelMap model, HttpServletRequest request ) {
-		
+		model.addAttribute("statusEnum",StatusEnum.values());
 		if (result.hasErrors()) {
 			log.info("Found Validation Errors!!!");
 			return "index";

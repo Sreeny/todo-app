@@ -27,7 +27,6 @@
 				<div class="mb-3 form-group required">
 					<label for="taskDueDate" class="control-label">Due Date</label>
 					<div class="form-group">
-					${todo.dueDate}
 						<div class="input-group" id="datepicker">
 							<input type="text" class="form-control" id="dueDate" name="dueDate" value="${todo.dueDate}">
 							<span class="input-group-append"> <span class="input-group-text bg-white d-block"> <i class="fa fa-calendar"></i>
