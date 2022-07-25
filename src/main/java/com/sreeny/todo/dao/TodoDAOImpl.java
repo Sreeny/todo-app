@@ -18,14 +18,13 @@ import org.springframework.stereotype.Service;
 import com.sreeny.todo.model.Todo;
 
 @Service("todoDao")
-public class TodoDAOImpl implements TodoDAO  {
+public class TodoDAOImpl implements TodoDAO {
 
 	protected static final Logger log = LoggerFactory.getLogger(TodoDAOImpl.class);
 
 	@Autowired
 	public SessionFactory sessionFactory;
 
-	@Override
 	public List<Todo> getAllTodsByUserId(String userId) {
 		userId = "Sreeny";
 		Session session = sessionFactory.getCurrentSession();
@@ -33,12 +32,8 @@ public class TodoDAOImpl implements TodoDAO  {
 		CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
 		CriteriaQuery<Todo> todoQuery = criteriaBuilder.createQuery(Todo.class);
 		Root<Todo> root = todoQuery.from(Todo.class);
-
 		todoQuery.where(criteriaBuilder.equal(root.get("userId"), userId));
-
-		// String hqlQuery = "SELECT t FROM Todo t where userId = :userId";
 		Query query = session.createQuery(todoQuery);
-		// query.setParameter("userId", "Sreeny");
 		log.info("Fetching Tods for the user {}", userId);
 		return query.list();
 	}
@@ -49,13 +44,23 @@ public class TodoDAOImpl implements TodoDAO  {
 		session.save(todo);
 		return todo;
 	}
-	
+
 	@Override
 	public Todo get(Long id) {
 		Session session = sessionFactory.getCurrentSession();
 		Todo todo = session.get(Todo.class, id);
 		return todo;
 	}
-	 
+
+	@Override
+	public Long remove(Long id) {
+		Session session = sessionFactory.getCurrentSession();
+		String hqlQuery = "DELETE  FROM Todo t where id = :id";
+		Query query = session.createQuery(hqlQuery);
+		query.setParameter("id", id);
+		query.executeUpdate();
+		log.info("Deleted  Todo for the id {}", id);
+		return id;
+	}
 
 }

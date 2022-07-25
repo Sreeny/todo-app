@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.sreeny.todo.model.StatusResponse;
 import com.sreeny.todo.model.Todo;
 import com.sreeny.todo.service.TodoService;
+import com.sreeny.todo.util.StatusEnum;
 
 @Controller
 
@@ -35,26 +37,35 @@ public class TodoController {
 		log.info("Creating new TODO!!");
 		Todo todo = new Todo();
 		model.addAttribute("newTodo", todo);
+		model.addAttribute("statusEnum",StatusEnum.values());
 		return "createTodo";
 	}
 
-	@RequestMapping(path = "/edit/{id}", method = RequestMethod.GET)
+	@RequestMapping(path = "/edit/{id}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
 	public String edit(@PathVariable Long id, ModelMap model) {
 
 		log.info("Fetching ToDo for update for :" + id);
 		Todo todo = todoService.getById(id);
-		model.addAttribute("toDo", todo);
+		model.addAttribute("todo", todo);
+		model.addAttribute("statusEnum",StatusEnum.values());
 		return "createTodo";
 	}
 
 	@RequestMapping(path = "/save", method = RequestMethod.POST)
-	public String save(@Valid Todo todo, BindingResult result) {
+	public String save(@Valid Todo todo, BindingResult result, ModelMap model) {
+		model.addAttribute("statusEnum",StatusEnum.values());
 		if (result.hasErrors()) {
 			log.info("Found Validation Errors!!!");
 			return "createTodo";
 		}
 		log.info("Save/Update :"+todo.toString());
-		todoService.save(todo);
+		if(StringUtils.isEmpty(todo.getId())) {
+			todoService.save(todo);
+		} else {
+			todoService.update(todo);
+		}
+		
+		model.remove("todo");
 		return "createTodo";
 	}
 

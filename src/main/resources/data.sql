@@ -1,2 +1,2 @@
-INSERT INTO TODO (ID, TASK_NAME ,DESCIPRIOTN ,DUE_DATE ,STATUS ,USER_ID ) VALUES (-1,'Complete Training Task','Complete Task ASAP', parseDateTime('20140101000000','yyyyMMddHHmmss'), 'Pending','Sreeny');
+INSERT INTO TODO (ID, TASK_NAME ,DESCIPRIOTN ,DUE_DATE ,STATUS ,USER_ID ) VALUES (-1,'Complete Training Task','Complete Task ASAP', parseDateTime('20140101000000','yyyyMMddHHmmss'), 'PENDING','Sreeny');
 -- INSERT INTO TODO (TASK_NAME ,DESCIPRIOTN ,DUE_DATE ,STATUS ,USER_ID ) VALUES ('Complete Clearance Task','Complete Task ASAP', parseDateTime('20140101000000','yyyyMMddHHmmss'), 'Pending','Chintha')

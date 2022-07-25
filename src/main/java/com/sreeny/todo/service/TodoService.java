@@ -14,10 +14,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.sreeny.todo.controller.TodoController;
 import com.sreeny.todo.dao.TodoDAO;
 import com.sreeny.todo.model.Todo;
+import com.sreeny.todo.util.StatusEnum;
 
 @Service
 @Transactional
@@ -47,17 +49,31 @@ public class TodoService {
 
 	public void save(Todo todo) {
 		log.info("Saving Todo :"+todo);
-		todo.setStatus("Pending");
+		
+		if(StringUtils.isEmpty(todo.getStatus())) {
+			todo.setStatus(StatusEnum.PENDING.name());
+		}
+		
 		todo.setUserId("Sreeny");
 		todoDao.saveTodo(todo);
 	}
 	
+	public void update(Todo todo) {
+		log.info("Updating Todo :"+todo);
+		Todo entity = todoDao.get(todo.getId());
+		if(entity != null) {
+			entity.setTaskName(todo.getTaskName());
+			entity.setDescription(todo.getDescription());
+			entity.setDueDate(todo.getDueDate());
+			entity.setStatus(todo.getStatus());
+		}
+		
+		todoDao.saveTodo(entity);
+	}
+	
 	public void remove(Long id) {
 		log.info("Removing  Todo :"+id);
-		Optional<Todo> todo = this.todoList.stream().filter(x-> x.getId().longValue() == id.longValue()).findAny();
-		if(todo.isPresent()) {
-			this.todoList.remove(todo.get());
-		}
+		todoDao.remove(id);
 	}
 
 }

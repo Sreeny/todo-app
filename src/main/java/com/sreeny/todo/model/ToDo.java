@@ -45,7 +45,7 @@ public class Todo {
 	
 	@NotNull
 	@Column(name = "DUE_DATE", nullable = false)
-    @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss") 
+    @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSS") 
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime dueDate;
