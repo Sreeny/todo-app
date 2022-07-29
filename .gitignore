@@ -1,0 +1,10 @@
+
+.classpath
+.project
+.settings/**
+*.class
+target/**
+*.log
+*.jar
+bin/**
+todo-app-web/bin/**
