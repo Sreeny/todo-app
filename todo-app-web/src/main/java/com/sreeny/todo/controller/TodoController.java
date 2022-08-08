@@ -61,8 +61,10 @@ public class TodoController {
 		log.info("Save/Update :"+todo.toString());
 		if(StringUtils.isEmpty(todo.getId())) {
 			todoService.save(todo);
+			model.addAttribute("message","Successfully Created Todo");
 		} else {
 			todoService.update(todo);
+			model.addAttribute("message","Successfully Updated Todo");
 		}
 		
 		model.remove("todo");

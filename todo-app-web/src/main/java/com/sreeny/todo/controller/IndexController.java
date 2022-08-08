@@ -43,6 +43,7 @@ public class IndexController {
 			return "index";
 		}
 		if(!userService.validateUser(login.getUserName())) {
+			model.addAttribute("invalidLoginMessage", "Invalid Username or password");
 			log.info("Invalid Username or password");
 			return "index";
 		}

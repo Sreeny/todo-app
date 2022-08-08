@@ -13,8 +13,13 @@
 	<div class="row">
 		<div class="col"></div>
 		<div class="col">
+		<span>
+					<c:if test = "${invalidLoginMessage != null || invalidLoginMessage != ''}">
+         				<p id="errorMessage" style ="color: #ff0000"><c:out value="${invalidLoginMessage}" ></c:out><p>
+     			 	</c:if>
+      			</span>
 			<form:form class='card p-3 bg-light' action="/todo/login" method="post" modelAttribute="login">
-
+				
 				<h5 class="card-header" style="background-color: #18d2f8;">Login</h5>
 				<div class="mb-3 form-group required">
 					<label for="username" class="control-label">User ID:</label>
@@ -28,7 +33,7 @@
 				</div>
 				<div class="mb-3">
 					<p>
-						<input type="submit" value="Submit" />
+						<input type="submit" id="submit" value="Submit" />
 						<input type="reset" value="Reset" />
 				</div>
 			</form:form>
