@@ -6,7 +6,7 @@
 			<div class="col">
 				<div class=" class='card p-4 bg-light'">
 
-					<h5 class="card-header" style="background-color: #18d2f8;">My Todo List</h5>
+					<h5 class="card-header" id="myTodoListHeader" style="background-color: #18d2f8;">My Todo List</h5>
 					<div class="tablecontainer">
 						<table class="table table-hover">
 							<thead>
@@ -21,13 +21,13 @@
 							</thead>
 							<tbody>
 								<tr ng-repeat="p in ctrl.todos">
-									<td><span ng-bind="p.id"></span></td>
+									<td><span ng-bind="p.id" name="todoId"></span></td>
 									<td><span ng-bind="p.taskName"></span></td>
 									<td><span ng-bind="p.description"></span></td>
 									<td><span ng-bind="p.dueDate"></span></td>
 									<td><span ng-bind="p.status"></span></td>
 									<td>
-			                            <button type="button"  class="btn btn-success custom-width"><a href = "<c:url value='/edit/{{p.id}}' />">Edit</a></button>  <button type="button" ng-click="ctrl.remove(p.id)" class="btn btn-danger custom-width">Remove</button>
+			                            <button type="button"  class="btn btn-success custom-width"><a href = "<c:url value='/edit/{{p.id}}' />">Edit</a></button>  <button name="removeButton" type="button" ng-click="ctrl.remove(p.id)" class="btn btn-danger custom-width">Remove</button>
 			                        </td> 
 								</tr>
 							</tbody>

@@ -32,7 +32,7 @@
 		
 	</div>
 	<span><c:if test = "${sessionScope.message != null || sessionScope.message != ''}">
-         <p>${sessionScope.message}<p>
+         <p id="welcomeMessage">${sessionScope.message}<p>
       </c:if>
       </span>
 </nav>

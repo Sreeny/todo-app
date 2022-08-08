@@ -54,7 +54,7 @@ public class TodoService {
 		return todo;
 	}
 	
-	public void update(Todo todo, Long id) {
+	public Todo update(Todo todo, Long id) {
 		log.info("Updating Todo :"+todo);
 		Optional<Todo> entity = todoRepository.findById(id);
 		if(!entity.isPresent() ) {
@@ -68,7 +68,7 @@ public class TodoService {
 			todoNew.setStatus(todo.getStatus());
 		}
 		
-		todoRepository.save(todoNew);
+		return todoRepository.save(todoNew);
 	}
 	
 	public void remove(Long id) {

@@ -12,6 +12,9 @@
 	<div class="row">
 		<div class="col"></div>
 		<div class="col">
+			<c:if test = "${not empty message}">
+         		<p id="message" style ="color: #ff0000"><c:out value="${message}" ></c:out><p>
+     		</c:if>
 			<form:form class='card p-3 bg-light' action="/todo/save" method="post" modelAttribute="todo">
 				<input type="hidden" id= "id" name="id" value="${todo.id}"/>
 				<h5 class="card-header" style="background-color: #18d2f8;">New ToDo</h5>
@@ -48,7 +51,7 @@
 				<div class="mb-3">
 					<p>
 						 
-						<input type="submit" value="Submit" />
+						<input type="submit" id="submit" value="Submit" />
 						<input type="reset" value="Reset" />
 				</div>
 			</form:form>
