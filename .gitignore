@@ -8,3 +8,5 @@ target/**
 *.jar
 bin/**
 todo-app-web/bin/**
+todo-app-services/test-output/**
+bin/

@@ -4,6 +4,7 @@ import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -21,7 +22,7 @@ public class TodoControllerTest {
 
 	public static  WebDriver driver;
 	
-	private static String TODO_URL = "http://localhost:8080/todo/";
+	private static String TODO_URL = "http://localhost:4200/";
 	
 	@BeforeTest
     public void setUp() {
@@ -35,12 +36,13 @@ public class TodoControllerTest {
 	
 	@AfterTest
     public void cleanUp() {
-		driver.close();
+		//driver.close();
     }
 	
 	@Test
 	public void testCreateTodo_success_when_all_data_correct() throws InterruptedException {
 		driver.get(TODO_URL+"create");
+		String welomeText1 = driver.findElement(By.id("message")).getText();
 		
 		WebElement taskName = driver.findElement(By.id("taskName"));
 		WebElement description = driver.findElement(By.id("description"));
@@ -57,6 +59,7 @@ public class TodoControllerTest {
         .pause(Duration.ofSeconds(3))
         .click().perform();
 		
+
 		String welomeText = driver.findElement(By.id("message")).getText();
 		assertTrue( welomeText.contains("Successfully Created Todo"));
 		
@@ -96,16 +99,15 @@ public class TodoControllerTest {
 		WebElement dueDate = driver.findElement(By.id("dueDate"));
 		WebElement status = driver.findElement(By.id("status"));
 		
-		WebElement submit = driver.findElement(By.id("submit"));
-		
 		WebElement id = driver.findElement(By.xpath("(//span[@name='todoId'])[1]"));
 		String idText = id.getText();
-		String script = "document.getElementsByName('id').item(0).value = '"+idText+"';";
+		
+		String script = "document.getElementById('id').value = '"+idText+"';";
 		((JavascriptExecutor) driver).executeScript(script);
 		
-		taskName.sendKeys("My task1 ");
-		description.sendKeys("my task description updated");
-		dueDate.sendKeys("2022-01-01T00:00:00");
+		driver.get(TODO_URL+"/edit/"+idText);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		WebElement submit = driver.findElement(By.id("submit"));
 		new Actions(driver)
         .moveToElement(submit)
         .pause(Duration.ofSeconds(3))
@@ -164,6 +166,8 @@ public class TodoControllerTest {
 		driver.manage().window().maximize();
 		WebElement id = driver.findElement(By.xpath("(//span[@name='todoId'])[1]"));
 		String idText = id.getText();
+		
+		System.out.println("idText:::"+idText);
 		WebElement removeElement1 = driver.findElement(By.xpath("(//button[@name='removeButton'])[1]"));
 		((JavascriptExecutor)driver).executeScript("arguments[0].click();", removeElement1);
 		
@@ -171,7 +175,7 @@ public class TodoControllerTest {
 		driver.navigate().refresh();
 		
 		WebElement idAfterDelete = driver.findElement(By.xpath("(//span[@name='todoId'])[1]"));
-		
+		System.out.println("idAfterDelete:::"+idAfterDelete);
 		assertNotEquals(idAfterDelete.getText(),idText);
 	}
 	

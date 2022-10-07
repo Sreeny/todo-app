@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +34,8 @@ import com.sreeny.todo.model.StatusResponse;
 import com.sreeny.todo.model.Todo;
 import com.sreeny.todo.service.TodoService;
 
+
+
 @RestController
 @Validated
 @RequestMapping(path = "/api")
@@ -42,12 +46,14 @@ public class TodoController {
 
 	protected static final Logger log = LoggerFactory.getLogger(TodoController.class);
 
+	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping(path = "/todo/{id}")
 	public ResponseEntity<Todo> get(@PathVariable Long id) {
 		log.info("Fetching Todo for the id: " + id);
 		return new ResponseEntity<Todo>(todoService.getById(id), HttpStatus.OK);
 	}
 
+	@CrossOrigin
 	@PostMapping(path = "/todo")
 	public ResponseEntity<?> save(@Valid @RequestBody Todo todo) {
 
@@ -59,6 +65,7 @@ public class TodoController {
 		return new ResponseEntity(response, HttpStatus.OK);
 	}
 
+	@CrossOrigin
 	@PostMapping(path = "/todo/update/{id}")
 	public ResponseEntity<?> save(@Valid @RequestBody Todo todo, @PathVariable Long id) {
 
@@ -69,6 +76,7 @@ public class TodoController {
 		return new ResponseEntity(response, HttpStatus.OK);
 	}
 
+	@CrossOrigin
 	@RequestMapping(path = "/todo/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<StatusResponse> delete(@PathVariable Long id) {
 		log.info("Deleting for the id: " + id);
@@ -79,8 +87,10 @@ public class TodoController {
 		return new ResponseEntity(response, HttpStatus.OK);
 	}
 
+	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/todo/allTodosByUserId/{userId}", method = RequestMethod.GET)
 	public ResponseEntity<List<Todo>> allTodsByUserId(@PathVariable String userId) {
+
 		log.info("Fetching Todos for the user: " + userId);
 		return new ResponseEntity<List<Todo>>(todoService.getAllTodsByUserId(userId), HttpStatus.OK);
 	}

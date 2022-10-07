@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 public class UserService {
 	
 	public Boolean validateUser(String userName) {
-		return Boolean.TRUE;
+		System.out.println("username ::::::"+userName);
+		return userName != null && "Sreeny".equals(userName);
 	}
 
 }

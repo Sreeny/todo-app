@@ -8,19 +8,24 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sreeny.todo.model.Login;
+import com.sreeny.todo.model.StatusResponse;
 import com.sreeny.todo.service.UserService;
 import com.sreeny.todo.util.StatusEnum;
 
 @Controller
-@RequestMapping(value="/")
+@RequestMapping(path = "/api")
 public class IndexController {
 	
 	@Autowired
@@ -34,20 +39,26 @@ public class IndexController {
 		return new ModelAndView("index");
 	}
 	
-	@RequestMapping(value="/login")
-	public String login(Login login, BindingResult result, ModelMap model, HttpServletRequest request ) {
+	@PostMapping(value="/login")
+	public ResponseEntity<?> login(@RequestBody Login login, BindingResult result, ModelMap model, HttpServletRequest request ) {
 		model.addAttribute("statusEnum",StatusEnum.values());
+		StatusResponse response = new StatusResponse();
 		if (result.hasErrors()) {
 			log.info("Found Validation Errors!!!");
-			return "index";
+			response.setStatus("Failed");
+			return new ResponseEntity(response, HttpStatus.OK);
 		}
+	
 		if(!userService.validateUser(login.getUserName())) {
 			model.addAttribute("invalidLoginMessage", "Invalid Username or password");
 			log.info("Invalid Username or password");
-			return "index";
+			response.setStatus("Failed");
+			return new ResponseEntity(response, HttpStatus.OK);
 		}
 		log.info("Login successfull ");
+		response.setStatus("Success");
 		request.getSession().setAttribute("message", "Welcome "+login.getUserName() +"!!!");
-		return "createTodo";
+		return new ResponseEntity(response, HttpStatus.OK);
+		
 	}
 }
