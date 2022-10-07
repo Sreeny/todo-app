@@ -27,7 +27,6 @@ export class ApiService {
 	} 
   
   public login(loginPayload){  
-    console.log("In service --"+loginPayload);
     return this.httpClient.post(this.REST_LOGIN_URI+'login/', loginPayload);  
  }  
 

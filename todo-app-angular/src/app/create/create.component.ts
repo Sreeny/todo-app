@@ -47,8 +47,6 @@ export class CreateComponent implements OnInit {
       this.apiService.get(this.id)
         .subscribe(
           data => {
-            // this.alertService.success('Registration successful', true);
-            //this.router.navigate(['/login']);
             console.log("success full fetched todo for !!!" + this.id);
             console.log("success full fetched todo for !!!" + JSON.stringify(data));
             this.todo = JSON.parse(JSON.stringify(data));
