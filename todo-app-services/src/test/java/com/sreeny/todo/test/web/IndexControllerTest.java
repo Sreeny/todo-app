@@ -4,8 +4,11 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -27,7 +30,7 @@ public class IndexControllerTest {
 
 	public static  WebDriver driver;
 	
-	private static String TODO_URL = "http://localhost:8080/todo/";
+	private static String TODO_URL = "http://localhost:4200/";
 	
 	@BeforeTest
     public void setUp() {
@@ -42,7 +45,7 @@ public class IndexControllerTest {
 	
 	@AfterTest
     public void cleanUp() {
-		driver.close();
+		//driver.close();
     }
 	
 	@Test
@@ -57,13 +60,13 @@ public class IndexControllerTest {
 		password.sendKeys("password");
 		new Actions(driver)
         .moveToElement(submit)
-        .pause(Duration.ofSeconds(3))
+        .pause(Duration.ofSeconds(10))
         .click().perform();
 		
-		assertEquals(driver.getCurrentUrl(), TODO_URL+"login");
-		String welomeText = driver.findElement(By.id("welcomeMessage")).getText();
-		assertTrue( welomeText.contains("Welcome Sreeny!!!"));
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
+		assertEquals(driver.getCurrentUrl(), TODO_URL+"create");
+			
 	}
 	
 	@Test
@@ -80,6 +83,8 @@ public class IndexControllerTest {
         .moveToElement(submit)
         .pause(Duration.ofSeconds(3))
         .click().perform();
+		
+		//driver.navigate().refresh();
 		
 		String errorMessage = driver.findElement(By.id("errorMessage")).getText();
 		assertTrue( errorMessage.contains("Invalid Username or password"));
